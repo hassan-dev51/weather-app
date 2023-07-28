@@ -3,8 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const city = searchParams.get("q");
-  console.log(city);
-
   const apikey = process.env.WEATHER_API_KEY;
 
   try {

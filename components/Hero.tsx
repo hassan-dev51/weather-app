@@ -12,7 +12,6 @@ const Hero = () => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const city = cityName.replace(" ", "%20");
-    console.log(city);
 
     try {
       setIsLoading(true);
