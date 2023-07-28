@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { responseProps } from "./types";
-import moment from "moment";
+import moment from "moment-timezone";
 import Image from "next/image";
 
 const Hero = () => {
@@ -40,7 +40,7 @@ const Hero = () => {
         </span>
       </h1>
 
-      <div className="mt-10">
+      <div className="mt-10 px-4">
         <form onSubmit={onSubmit} className="relative">
           <input
             type="text"
@@ -70,48 +70,81 @@ const Hero = () => {
         <div className="mt-10 px-8">
           <div className="div">
             <p>
-              Temp <span>{cityDetail?.main.temp.toFixed(0)}&deg;C</span>
+              City <span className="name"> {cityDetail?.name}</span>
             </p>
             <p>
-              Max-Temp <span>{cityDetail?.main.temp.toFixed(0)}&deg;C</span>
-            </p>
-            <p>
-              Min-Temp <span>{cityDetail?.main.temp.toFixed(0)}&deg;C</span>
+              Country
+              <span className="name"> {cityDetail?.sys.country}</span>
             </p>
           </div>
 
-          <div className="div ">
+          <div className="div flex-row">
             {cityDetail?.weather?.map((currElem) => (
               <div
                 key={currElem.id}
-                className="flex flex-row-reverse justify-center items-center"
+                className="flex justify-between items-center"
               >
+                <h2 className="name capitalize">{currElem.description}</h2>
                 <Image
                   src={`https://openweathermap.org/img/wn/${currElem.icon}@2x.png`}
                   alt="weather icon"
                   width={100}
                   height={100}
                 />
-
-                <h2>weather condition {currElem.main}</h2>
-                <h2>{currElem.description}</h2>
               </div>
             ))}
           </div>
 
           <div className="div">
-            <h3> City {cityDetail?.name}</h3>
-            <span>Country {cityDetail?.sys.country}</span>
+            <p>
+              Temp{" "}
+              <span className="text-blue-400">
+                {cityDetail?.main.temp.toFixed(0)}&deg;C
+              </span>
+            </p>
+            <p>
+              Max-Temp{" "}
+              <span className="text-red-400">
+                {cityDetail?.main.temp.toFixed(0)}&deg;C
+              </span>
+            </p>
+            <p>
+              Min-Temp{" "}
+              <span className="text-green-400">
+                {cityDetail?.main.temp.toFixed(0)}&deg;C
+              </span>
+            </p>
+          </div>
+
+          <div className="div">
+            <p>
+              city feels_like <br />
+              <span> {cityDetail?.main?.feels_like} </span>
+            </p>
+            <p>
+              city humidity <br />
+              <span>{cityDetail?.main?.humidity}%</span>
+            </p>
+            <p>
+              city wind speed <br />
+              <span>{cityDetail?.wind?.speed} m/s </span>
+            </p>
           </div>
 
           <div className="div">
             <p>
               Sunrise{" "}
-              <span>{moment.unix(cityDetail?.sys.sunrise).format("LT")}</span>
+              <span>
+                {cityDetail &&
+                  moment.unix(cityDetail?.sys?.sunrise).format("LT")}
+              </span>
             </p>
             <p>
               Sunset{" "}
-              <span>{moment.unix(cityDetail?.sys.sunset).format("LT")}</span>
+              <span>
+                {cityDetail &&
+                  moment.unix(cityDetail?.sys?.sunset).format("LT")}
+              </span>
             </p>
           </div>
 
@@ -120,16 +153,12 @@ const Hero = () => {
             <h1> Longitute = {cityDetail?.coord?.lon}</h1>
           </div>
 
-          <h1> city timezone = {cityDetail?.timezone}</h1>
-          <h1> city visibility = {cityDetail?.visibility}</h1>
-          <h1> city base = {cityDetail?.base}</h1>
-          <h1> city code = {cityDetail?.code || "N/A"}</h1>
-          <h1> city dt = {cityDetail?.dt}</h1>
-          <h1> city id = {cityDetail?.id}</h1>
-          <h1> city pressure = {cityDetail?.main?.pressure}</h1>
-          <h1> city feels_like = {cityDetail?.main?.feels_like}</h1>
-          <h1> city humidity = {cityDetail?.main?.humidity}</h1>
-          <h1> city wind speed = {cityDetail?.wind?.speed}</h1>
+          <div className="div">
+            <h1>
+              city visibility = {cityDetail && cityDetail?.visibility / 1000}km
+            </h1>{" "}
+            <h1> city pressure = {cityDetail?.main?.pressure}</h1>
+          </div>
         </div>
       )}
     </section>

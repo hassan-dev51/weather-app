@@ -5,7 +5,7 @@ export interface responseProps {
   };
   base: string;
   code: number;
-  dt: number;
+  dt: time;
   id: number;
   main: {
     feels_like: number;
@@ -22,7 +22,7 @@ export interface responseProps {
     sunrise: time;
     sunset: time;
   };
-  timezone: number;
+  timezone: time;
   visibility: number;
   weather: [
     {
