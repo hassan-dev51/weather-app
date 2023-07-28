@@ -59,7 +59,7 @@ const Hero = () => {
         </form>
       </div>
       {isLoading ? (
-        <div className="m-auto">
+        <div className="flex justify-center items-start mt-12">
           <img
             src="/loader.svg"
             alt="loading"
