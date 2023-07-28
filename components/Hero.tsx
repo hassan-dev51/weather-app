@@ -32,7 +32,7 @@ const Hero = () => {
   };
   return (
     <section className="max-w-screen-md m-auto pt-10">
-      <h1 className="mt-16 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-center">
+      <h1 className="mt-16 px-3 text-3xl  md:text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-center">
         Weather App Using <br className="max-md:hidden" />
         <span className="bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent capitalize">
           open weather map api
