@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     if (!apikey) {
       return NextResponse.json("Api key is required", { status: 500 });
     }
+
     const res = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apikey}&units=metric`
     );
@@ -19,7 +20,6 @@ export async function GET(req: NextRequest) {
         status: 404,
       });
     }
-    console.log({ message: "data fetched succussfully", data });
 
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {

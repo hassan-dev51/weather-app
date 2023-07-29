@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { responseProps } from "./types";
 import moment from "moment-timezone";
 import Image from "next/image";
 
 const Hero = () => {
-  const [cityName, setCityName] = useState<string>("");
+  const [cityName, setCityName] = useState<string>("Siālkot");
   const [cityDetail, setCityDetail] = useState<responseProps | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  //function to get the dynamic data by searching the city name
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const city = cityName.replace(" ", "%20");
@@ -30,6 +32,21 @@ const Hero = () => {
       alert("failed to send data");
     }
   };
+
+  // function to get by default data by hard coding the city name
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const singleCityData = await fetch("/api/weatherapi?q=siālkot");
+        const result = await singleCityData.json();
+        setCityDetail(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <section className="max-w-screen-md m-auto pt-10">
       <h1 className="mt-16 px-3 text-3xl  md:text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl text-center">
@@ -39,6 +56,7 @@ const Hero = () => {
         </span>
       </h1>
 
+      {/* input field to search the city name */}
       <div className="mt-10 px-4">
         <form onSubmit={onSubmit} className="relative">
           <input
@@ -57,6 +75,7 @@ const Hero = () => {
           </button>
         </form>
       </div>
+      {/* actual data which we will receive through api */}
       {isLoading ? (
         <div className="flex justify-center items-start mt-12">
           <img
@@ -73,7 +92,7 @@ const Hero = () => {
             </p>
             <p>
               Country
-              <span className="name"> {cityDetail?.sys.country}</span>
+              <span className="name"> {cityDetail?.sys?.country}</span>
             </p>
           </div>
 
@@ -98,19 +117,19 @@ const Hero = () => {
             <p>
               Temp{" "}
               <span className="text-blue-400">
-                {cityDetail?.main.temp.toFixed(0)}&deg;C
+                {cityDetail?.main?.temp.toFixed(0)}&deg;C
               </span>
             </p>
             <p>
               Max-Temp{" "}
               <span className="text-red-400">
-                {cityDetail?.main.temp.toFixed(0)}&deg;C
+                {cityDetail?.main?.temp.toFixed(0)}&deg;C
               </span>
             </p>
             <p>
               Min-Temp{" "}
               <span className="text-green-400">
-                {cityDetail?.main.temp.toFixed(0)}&deg;C
+                {cityDetail?.main?.temp.toFixed(0)}&deg;C
               </span>
             </p>
           </div>
